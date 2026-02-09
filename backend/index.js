@@ -865,7 +865,22 @@ const initWhatsApp = () => {
   });
 
   whatsappClient.on('qr', async (qr) => {
-    console.log('QR Code received');
+    console.log('\n========================================');
+    console.log('QR Code received - Scan with WhatsApp');
+    console.log('========================================\n');
+    
+    // Display QR code in console as ASCII art
+    try {
+      const qrString = await qrcode.toString(qr, { type: 'terminal', small: true });
+      console.log(qrString);
+      console.log('\n========================================');
+      console.log('Scan the QR code above with WhatsApp');
+      console.log('========================================\n');
+    } catch (error) {
+      console.error('Error generating QR code for console:', error);
+    }
+    
+    // Also generate data URL for web display
     whatsappQR = await qrcode.toDataURL(qr);
     whatsappStatus = 'connecting';
   });
